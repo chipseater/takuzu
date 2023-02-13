@@ -1,18 +1,10 @@
 <script setup>
-import { ref } from "vue"
 import Row from "./Row.vue"
+import { ref } from "vue"
+import { range } from './../utils/utils.js'
 
 const n = Math.random() * 10
-const zeroArray = Array.from({length: 10}, () => 0)
-const zeroMatrix = zeroArray.map(_ => Array.from({length: 10}, () => 0))
-
-function rule1(matrix) {
-    let indexes = []
-    for (let i = 0 ; i < 10 ; i++) {
-        indexes.push(i)
-    }
-    indexes = array.sort(_ => 0.5 - Math.random()).slice(0, n)
-}
+const zeroMatrix = range(n)
 
 const grid = ref(zeroMatrix)
 </script>
