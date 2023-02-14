@@ -1,12 +1,9 @@
 <script setup>
 import Row from "./Row.vue"
 import { ref } from "vue"
-import { range } from './../utils/utils.js'
+import { grid_generator } from './../utils/grid_generator.js'
 
-const n = Math.random() * 10
-const zeroMatrix = range(n)
-
-const grid = ref(zeroMatrix)
+const grid = ref()
 </script>
 
 <template>
