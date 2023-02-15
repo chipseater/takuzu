@@ -7,6 +7,7 @@ export function range(n) {
 }
 
 export function convertArrayToInt(array) {
+    if (!array.length) return []
     return parseInt(array.join(''), 2)
 }
 
@@ -14,18 +15,27 @@ export function reverseGrid(grid) {
     const reversedGrid = []
     for (let i ; i < grid.length ; i++) {
         const row = []
-        for (let j ; j < grid.length ; i++) {
+        for (let j ; j < grid[i].length ; i++) {
             row.push(grid[j][i])
+            console.log('el', grid[j][i])
         }
         reversedGrid.push(row)
     }
-    return reverseGrid
+    return reversedGrid
 }
 
-export function generate_random_indexes(n) {
-    let indexes = []
-    for (let i = 0 ; i < 10 ; i++) {
-        indexes.push(i)
+export function check_grid_full(grid, size) {
+    return grid.length == size && grid.every(row => row.length == size)
+}
+
+export function gridify(flatten_grid) {
+    const grid = []
+    let i = 0
+    let row = []
+    for (let i = 0 ; i < 10 ; i+=3) {
+        row = flatten_grid.slice(i, i+3)
+        grid.push(row)
+        row = []
     }
-    return array.sort(_ => 0.5 - Math.random()).slice(0, n)
+    return grid
 }
