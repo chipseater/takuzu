@@ -1,19 +1,16 @@
 import { range, convertArrayToInt, reverseGrid } from './utils.js'
 
-function rule1(array) {
-    if (array.length < 3) return true
+function rule1(array, size = 10) {
     const n0 = array.filter(el => el == 0).length
     const n1 = array.filter(el => el == 1).length
-    return n0 == n1
+    return n0 <= 5 && n1 <= 5
 }
 
-function rule2(array) {
-    if (array.length < 3) return false
-    for (let i = 2 ; i < array.length ; i++) {
-        if (array[i - 2] != array[i - 1]) return false
-        if (array[i - 1] != array[i]) return false
+export function rule2(array, verbose = false) {
+    for (let i = 2; i < array.length; i++) {
+        if (array[i-2] == array[i-1] && array[i-1] == array[i]) return true
     }
-    return true
+    return false
 }
 
 function rule3(array) {
@@ -22,25 +19,25 @@ function rule3(array) {
     return uniqueIntArray.length == intArray.length
 }
 
-export function rules_checker(matrix) {
+export function rules_checker(matrix, verbose = false) {
     // Rule 1
-    for (let i = 0 ; i < matrix.length ; i++) {
+    for (let i = 0; i < matrix.length; i++) {
         if (!rule1(matrix[i])) return false
         let col = range(matrix.length).map(j => matrix[i][j])
         if (!rule1(col)) return false
     }
-    console.log('Rule 1 passed')
+    if (verbose) console.log('Rule 1 passed')
     // Rule 2
-    for (let i = 0 ; i < matrix.length ; i++) {
+    for (let i = 0; i < matrix.length; i++) {
         let row = matrix[i]
-        if (rule2(row)) return false
+        if (rule2(row, verbose)) return false
         let col = range(matrix.length).map(j => matrix[i][j])
         if (rule2(col)) return false
     }
-    console.log('Rule 2 passed')
+    if (verbose) console.log('Rule 2 passed')
     // Rule 3
     if (!matrix.every(rule3)) return false
     if (!(reverseGrid(matrix).every(rule3))) return false
-    console.log('Rule 3 passed')
+    if (verbose) console.log('Rule 3 passed')
     return true
 }

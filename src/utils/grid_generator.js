@@ -1,14 +1,39 @@
 import { rules_checker } from './rules'
-import { range, check_grid_full, gridify } from './utils'
+import { gridify } from './utils'
+
+function check_stack(stack) {
+    return rules_checker(gridify(stack))
+}
+
+class Node {
+    constructor(value, ...children) {
+        this.value = value
+        this.children = children
+    }
+
+    static createNode(node) {
+        if (typeof node == 'number') return new Node(node, 0, 1)
+        return node
+    }
+
+    buildStack(stack=[]) {
+        if (stack.length >= 100) return stack
+        const rnd_bit = Number(Math.random() < 0.5)
+        const inv_bit = Number(!rnd_bit)
+        if (check_stack(stack.concat([rnd_bit]))) {
+            this.children[rnd_bit] = Node.createNode(this.children[rnd_bit])
+            return this.children[rnd_bit].buildStack(stack.concat([rnd_bit]))
+        }
+        if (check_stack(stack.concat([inv_bit]))) {
+            this.children[inv_bit] = Node.createNode(this.children[inv_bit])
+            return this.children[inv_bit].buildStack(stack.concat([inv_bit]))
+        }
+    }
+}
 
 export function grid_generator() {
-    const stack = []
-
-    while (!check_grid_full(gridify(stack))) {
-        // Check if adding a zero breaks the rules
-        // Check if adding a one breaks the rules
-        // If both work, add a random value
-        // If either a zero or a one works, add it
-        // If none works, pop the stack
-    }
+    const startNode = new Node(Number(Math.random() < 0.5), 0, 1)
+    const stack = startNode.buildStack()
+    console.log(stack)
+    return gridify(stack)
 }

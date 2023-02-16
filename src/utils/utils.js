@@ -1,6 +1,6 @@
 export function range(n) {
     let counter = -1
-    return Array.from({length: n}, () => 0).map(() => {
+    return Array.from({ length: n }, () => 0).map(() => {
         counter++
         return counter
     })
@@ -13,9 +13,9 @@ export function convertArrayToInt(array) {
 
 export function reverseGrid(grid) {
     const reversedGrid = []
-    for (let i ; i < grid.length ; i++) {
+    for (let i; i < grid.length; i++) {
         const row = []
-        for (let j ; j < grid[i].length ; i++) {
+        for (let j = 0; j < grid[i].length; i++) {
             row.push(grid[j][i])
             console.log('el', grid[j][i])
         }
@@ -24,18 +24,17 @@ export function reverseGrid(grid) {
     return reversedGrid
 }
 
-export function check_grid_full(grid, size) {
-    return grid.length == size && grid.every(row => row.length == size)
-}
+export function gridify(list, elementsPerSubArray=10) {
+    var matrix = [], i, k
 
-export function gridify(flatten_grid) {
-    const grid = []
-    let i = 0
-    let row = []
-    for (let i = 0 ; i < 10 ; i+=3) {
-        row = flatten_grid.slice(i, i+3)
-        grid.push(row)
-        row = []
+    for (i = 0, k = -1; i < list.length; i++) {
+        if (i % elementsPerSubArray == 0) {
+            k++
+            matrix[k] = []
+        }
+
+        matrix[k].push(list[i])
     }
-    return grid
+
+    return matrix
 }

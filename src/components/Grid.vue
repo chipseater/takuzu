@@ -2,15 +2,11 @@
 import Row from "./Row.vue"
 import { ref } from "vue"
 import { grid_generator } from './../utils/grid_generator.js'
-import { gridify } from './../utils/utils.js'
-import { rules_checker } from './../utils/rules.js'
+import { gridify } from './../utils/utils'
+import { rules_checker, rule2 } from './../utils/rules.js'
 
-console.log(rules_checker([
-    [1,0,1,0],
-    [1,0,0,1],
-]))
-
-const grid = ref()
+const grid = ref(grid_generator())
+console.log(grid_generator())
 </script>
 
 <template>
