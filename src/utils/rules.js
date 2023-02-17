@@ -6,7 +6,7 @@ function rule1(array, size = 10) {
     return n0 <= 5 && n1 <= 5
 }
 
-export function rule2(array, verbose = false) {
+export function rule2(array) {
     for (let i = 2; i < array.length; i++) {
         if (array[i-2] == array[i-1] && array[i-1] == array[i]) return true
     }
@@ -30,8 +30,11 @@ export function rules_checker(matrix, verbose = false) {
     // Rule 2
     for (let i = 0; i < matrix.length; i++) {
         let row = matrix[i]
-        if (rule2(row, verbose)) return false
-        let col = range(matrix.length).map(j => matrix[i][j])
+        if (rule2(row)) return false
+    }
+    const reversedMatrix = reverseGrid(matrix)
+    for (let i = 0; i < reversedMatrix.length; i++) {
+        let col = reversedMatrix[i]
         if (rule2(col)) return false
     }
     if (verbose) console.log('Rule 2 passed')

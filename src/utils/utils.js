@@ -11,17 +11,10 @@ export function convertArrayToInt(array) {
     return parseInt(array.join(''), 2)
 }
 
-export function reverseGrid(grid) {
-    const reversedGrid = []
-    for (let i; i < grid.length; i++) {
-        const row = []
-        for (let j = 0; j < grid[i].length; i++) {
-            row.push(grid[j][i])
-            console.log('el', grid[j][i])
-        }
-        reversedGrid.push(row)
-    }
-    return reversedGrid
+export function reverseGrid(matrix) {
+    if (matrix.length == 0) return []
+    return matrix[0].map((val, index) => matrix.map(row => row[index])
+    .filter(cell => typeof cell != 'undefined').reverse())
 }
 
 export function gridify(list, elementsPerSubArray=10) {
