@@ -1,7 +1,6 @@
 import { rules_checker } from "./rules"
 
 export function gen_blanks(grid, n) {
-    console.log(grid)
     let res = grid
     while (n > 0) {
         const x = Math.floor(Math.random() * 10)
