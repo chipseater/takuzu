@@ -44,6 +44,7 @@ export function grid_generator() {
     const startTime = Date.now()
     const startNode = new Node(Number(Math.random() < 0.5), 0, 1)
     startNode.buildStack()
+    console.log(gridify([...resultStack.value]))
     const res = [...gen_blanks(gridify([...resultStack.value]), 60)]
     console.log(`Temps d’exécution: ${Date.now() - startTime}ms`)
     return res

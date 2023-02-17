@@ -32,6 +32,6 @@ function resetGrid() {
             </div>
         </div>
         <RestartButton />
-        <Popup @restart="" @close="() => displayPopup = false" v-if="displayPopup" title="🥳 Grille complétée !" message="Bien joué, j’espère que tu as apprécié mon jeu" />
+        <Popup @restart="resetGrid" @close="() => displayPopup = false" v-if="displayPopup" title="🥳 Grille complétée !" message="Bien joué, j’espère que tu as apprécié mon jeu" />
     </div>
 </template>

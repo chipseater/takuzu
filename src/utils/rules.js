@@ -1,9 +1,9 @@
 import { range, convertArrayToInt, reverseGrid } from './utils.js'
 
-function rule1(array, size = 10) {
+function rule1(array) {
     const n0 = array.filter(el => el == 0).length
     const n1 = array.filter(el => el == 1).length
-    return n0 <= 5 && n1 <= 5
+    return n0 <= 5 || n1 <= 5
 }
 
 export function rule2(array) {
