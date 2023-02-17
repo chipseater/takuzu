@@ -11,7 +11,6 @@ const displayPopup = ref(false)
 
 function handleChange(row, col, value) {
     grid.value[col][row] = value
-    console.log([... grid.value])
 
     // Win detection
     if (grid.value.every(batch => !batch.includes(-1)) && rules_checker(grid.value)) {

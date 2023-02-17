@@ -3,7 +3,7 @@ import { range, convertArrayToInt, reverseGrid } from './utils.js'
 function rule1(array) {
     const n0 = array.filter(el => el == 0).length
     const n1 = array.filter(el => el == 1).length
-    return n0 <= 5 || n1 <= 5
+    return n0 <= 5 && n1 <= 5
 }
 
 export function rule2(array) {
@@ -23,7 +23,7 @@ export function rules_checker(matrix, verbose = false) {
     // Rule 1
     for (let i = 0; i < matrix.length; i++) {
         if (!rule1(matrix[i])) return false
-        let col = range(matrix.length).map(j => matrix[i][j])
+        let col = range(matrix.length).map(j => matrix[j][i])
         if (!rule1(col)) return false
     }
     if (verbose) console.log('Rule 1 passed')
