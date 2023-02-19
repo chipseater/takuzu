@@ -10,13 +10,11 @@ const emit = defineEmits(['change'])
 const immutable = ref(initialGrid.value[col][row] >= 0)
 
 watch(initCell, () => {
-    console.log('change')
     immutable.value = initialGrid.value[col][row] >= 0
 })
 
 function clickHandler() {
     if (immutable.value) return
-    console.log(immutable.value, col, row)
     emit('change', col, row)
 }
 </script>

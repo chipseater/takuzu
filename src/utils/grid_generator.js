@@ -47,7 +47,7 @@ export function grid_generator() {
     resultStack.value = []
     buildStack()
 
-    const grid = [...gen_blanks(gridify([...resultStack.value]), 80)]
+    const grid = [...gen_blanks(gridify([...resultStack.value]), 1)]
     resultGrid.value = JSON.parse(JSON.stringify(grid))
     initialGrid.value = JSON.parse(JSON.stringify(grid))
 }
