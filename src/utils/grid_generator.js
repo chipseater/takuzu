@@ -1,51 +1,53 @@
 import { rules_checker } from './rules'
 import { gridify } from './utils'
-import { gen_blanks } from './blank_generator'
-import { ref } from 'vue'
+import { ref, shallowRef } from 'vue'
 
-const resultStack = ref([])
+const resultStack = shallowRef([])
+export const initialGrid = ref([])
+export const resultGrid = ref([])
 
 function check_stack(stack) {
     return rules_checker(gridify(stack))
 }
 
-class Node {
-    constructor(value, ...children) {
-        this.value = value
-        this.children = children
-    }
+function buildStack(stack=[]) {
+    if (stack.length >= 100) resultStack.value = stack
+    if (resultStack.value.length >= 100) return
 
-    static createNode(node) {
-        if (typeof node == 'number') return new Node(node, 0, 1)
-        return node
-    }
+    const rnd_bit = Number(Math.random() < 0.5)
+    const inv_bit = Number(!rnd_bit)
 
-    buildStack(stack=[]) {
-        if (stack.length >= 100) {
-            resultStack.value = stack
-            return
+    if (check_stack(stack.concat([rnd_bit])))
+        buildStack(stack.concat([rnd_bit]))
+    if (check_stack(stack.concat([inv_bit])))
+        buildStack(stack.concat([inv_bit]))
+}
+
+function gen_blanks(grid, n) {
+    let res = grid
+    while (n > 0) {
+        const x = Math.floor(Math.random() * 10)
+        const y = Math.floor(Math.random() * 10)
+        grid[x][y] = !grid[x][y]
+        if (!rules_checker(grid)) {
+            res[x][y] = -1
         }
-        if (resultStack.value.length) return
-        const rnd_bit = Number(Math.random() < 0.5)
-        const inv_bit = Number(!rnd_bit)
-        if (check_stack(stack.concat([rnd_bit]))) {
-            this.children[rnd_bit] = Node.createNode(this.children[rnd_bit])
-            this.children[rnd_bit].buildStack(stack.concat([rnd_bit]))
-        }
-        if (check_stack(stack.concat([inv_bit]))) {
-            this.children[inv_bit] = Node.createNode(this.children[inv_bit])
-            this.children[inv_bit].buildStack(stack.concat([inv_bit]))
-        }
+        grid[x][y] = !grid[x][y]
+        res[x][y] = -1
+        n--
     }
+    return res
+}
+
+export function mutateInitValue(value) {
+    initialGrid.value = JSON.parse(JSON.stringify(value))
 }
 
 export function grid_generator() {
     resultStack.value = []
-    const startTime = Date.now()
-    const startNode = new Node(Number(Math.random() < 0.5), 0, 1)
-    startNode.buildStack()
-    console.log(gridify([...resultStack.value]))
-    const res = [...gen_blanks(gridify([...resultStack.value]), 60)]
-    console.log(`Temps d’exécution: ${Date.now() - startTime}ms`)
-    return res
+    buildStack()
+
+    const grid = [...gen_blanks(gridify([...resultStack.value]), 80)]
+    resultGrid.value = JSON.parse(JSON.stringify(grid))
+    initialGrid.value = JSON.parse(JSON.stringify(grid))
 }

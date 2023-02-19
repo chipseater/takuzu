@@ -10,7 +10,7 @@ function handleChange(col, value) {
 </script>
 
 <template>
-    <div class="flex flex-row" v-for="(cell, index) in row" :key="index">
-        <Cell @change="handleChange" :cell="cell" :col="index" />
+    <div class="flex flex-row" v-for="(cell, i) in row" :key="i">
+        <Cell @change="handleChange" :row="i" :cell="cell" :col="index" />
     </div>
 </template>

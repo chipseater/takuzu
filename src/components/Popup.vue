@@ -16,7 +16,7 @@ const emit = defineEmits(['close', 'restart'])
             {{ message }}
         </div>
         <div class="flex items-center justify-center">
-            <RestartButton />
+            <RestartButton @restart="() => {emit('restart');emit('close')}" />
         </div>
     </div>
 </template>
