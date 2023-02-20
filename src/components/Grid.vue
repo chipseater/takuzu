@@ -3,6 +3,7 @@ import Cell from "./Cell.vue"
 import Popup from "./Popup.vue"
 import RestartButton from "./RestartButton.vue"
 import Timer from "./Timer.vue"
+import PauseOverlay from "./PauseOverlay.vue"
 import { ref } from "vue"
 import { grid_generator, resultGrid, initialGrid, mutateInitValue } from './../utils/grid_generator.js'
 import { rules_checker } from './../utils/rules.js'
@@ -12,6 +13,10 @@ timeRunner()
 const displayPopup = ref(false)
 const time = ref(0)
 const play = ref(false)
+
+window.addEventListener('keypress', (event) => {
+    if (event.code == 'Space') handlePause()
+})
 
 function handleChange(row, col) {
     play.value = true
@@ -55,13 +60,13 @@ function formatTime(time) {
 
 <template>
     <div class="flex items-center flex-col">
-        <div class="flex flex-col border-[1px] select-none font-bold border-gray-300">
+        <PauseOverlay @pause="handlePause" :pause="!play && !(time == 0)">
             <div class="flex flex-row w-full" v-for="(row, i) in initialGrid" :key="i">
                 <div class="flex flex-row" v-for="(cell, j) in row" :key="j">
-                    <Cell @change="handleChange" :col="i" :row="j" :init-cell="cell" />
+                    <Cell @change="handleChange" :pause="!play && !(time == 0)" :col="i" :row="j" :init-cell="cell" />
                 </div>
             </div>
-        </div>
+        </PauseOverlay>
         <div class="flex items-center justify-around w-full">
             <RestartButton @restart="resetGrid" />
             <Timer @pause="handlePause" :play="play" :time="time" />
