@@ -1,5 +1,5 @@
 <script setup>
-import RestartButton from './RestartButton.vue';
+import RestartButton from '../RestartButton.vue'
 
 const { title, message } = defineProps(['title', 'message'])
 const emit = defineEmits(['close', 'restart'])

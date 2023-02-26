@@ -1,6 +1,6 @@
 <script setup>
 import Cell from "./Cell.vue"
-import Popup from "./Popup.vue"
+import CompletionPopup from "./popups/CompletionPopup.vue"
 import RestartButton from "./RestartButton.vue"
 import Timer from "./Timer.vue"
 import PauseOverlay from "./PauseOverlay.vue"
@@ -71,6 +71,6 @@ function formatTime(time) {
             <RestartButton @restart="resetGrid" />
             <Timer @pause="handlePause" :play="play" :time="time" />
         </div>
-        <Popup @restart="resetGrid" @close="() => displayPopup = false" v-if="displayPopup" :title="`🥳 Grille complétée en ${formatTime(time)} !`" message="Bien joué, j’espère que tu as apprécié mon jeu" />
+        <CompletionPopup @restart="resetGrid" @close="() => displayPopup = false" v-if="displayPopup" :title="`🥳 Grille complétée en ${formatTime(time)} !`" message="Bien joué, j’espère que tu as apprécié mon jeu" />
     </div>
 </template>

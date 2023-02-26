@@ -7,8 +7,12 @@ const emit = defineEmits(['pause', 'play'])
 const time = toRef(props, 'time')
 const play = toRef(props, 'play')
 
-const sec = computed(() => Math.floor(time.value % 60))
-const min = computed(() => Math.floor(sec.value / 60))
+const sec = computed(() => {
+    const res = Math.floor(time.value % 60)
+    if (res < 10) return '0' + res.toString()
+    return res
+})
+const min = computed(() => Math.floor(time.value / 60))
 const hours = computed(() => Math.floor(min.value / 60))
 </script>
 

@@ -29,7 +29,7 @@ function gen_blanks(grid, n) {
         const x = Math.floor(Math.random() * 10)
         const y = Math.floor(Math.random() * 10)
         grid[x][y] = !grid[x][y]
-        if (!rules_checker(grid)) {
+        if (!rules_checker(grid) && res[x][y] != -1) {
             res[x][y] = -1
         }
         grid[x][y] = !grid[x][y]
@@ -47,7 +47,7 @@ export function grid_generator() {
     resultStack.value = []
     buildStack()
 
-    const grid = [...gen_blanks(gridify([...resultStack.value]), 80)]
+    const grid = [...gen_blanks(gridify([...resultStack.value]), 60)]
     resultGrid.value = JSON.parse(JSON.stringify(grid))
     initialGrid.value = JSON.parse(JSON.stringify(grid))
 }
