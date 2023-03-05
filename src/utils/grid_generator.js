@@ -1,26 +1,31 @@
 import { rules_checker } from './rules'
 import { gridify } from './utils'
-import { ref, shallowRef } from 'vue'
+import { ref } from 'vue'
 
-const resultStack = shallowRef([])
 export const initialGrid = ref([])
 export const resultGrid = ref([])
 
-function check_stack(stack) {
-    return rules_checker(gridify(stack))
+function check_list(list) {
+    return rules_checker(gridify(list))
 }
 
-function buildStack(stack=[]) {
-    if (stack.length >= 100) resultStack.value = stack
-    if (resultStack.value.length >= 100) return
+function buildList() {
+    const stack = [[]]
+    while (stack.length) {
+        const currentList = stack.pop()
+        console.log(currentList)
 
-    const rnd_bit = Number(Math.random() < 0.5)
-    const inv_bit = Number(!rnd_bit)
+        if (currentList.length == 100) return currentList
 
-    if (check_stack(stack.concat([rnd_bit])))
-        buildStack(stack.concat([rnd_bit]))
-    if (check_stack(stack.concat([inv_bit])))
-        buildStack(stack.concat([inv_bit]))
+        const rnd_bit = Number(Math.random() < 0.5)
+        const inv_bit = Number(!rnd_bit)
+
+        if (check_list(currentList.concat([rnd_bit])))
+            stack.push(currentList.concat([rnd_bit]))
+        if (check_list(currentList.concat([inv_bit])))
+            stack.push(currentList.concat([inv_bit]))
+    }
+
 }
 
 function gen_blanks(grid, n) {
@@ -44,10 +49,7 @@ export function mutateInitValue(value) {
 }
 
 export function grid_generator() {
-    resultStack.value = []
-    buildStack()
-
-    const grid = [...gen_blanks(gridify([...resultStack.value]), 60)]
+    const grid = gen_blanks(gridify(buildList()), 60)
     resultGrid.value = JSON.parse(JSON.stringify(grid))
     initialGrid.value = JSON.parse(JSON.stringify(grid))
 }
