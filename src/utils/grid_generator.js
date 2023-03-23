@@ -25,7 +25,6 @@ function buildList() {
         if (check_list(currentList.concat([inv_bit])))
             stack.push(currentList.concat([inv_bit]))
     }
-
 }
 
 function gen_blanks(grid, n) {

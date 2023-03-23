@@ -17,7 +17,7 @@ const hours = computed(() => Math.floor(min.value / 60))
 </script>
 
 <template>
-    <div class="flex items-center w-24 my-2 bg-gray-300 rounded-xl">
+    <div class="flex items-center w-fit my-2 bg-gray-300 rounded-xl">
         <PauseButton :play="play" @click="() => emit('pause')" />
         <div class="p-2">
             {{ hours ? `${hours}:` : '' }}{{ min }}:{{ sec }}
